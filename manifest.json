@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "author": "linsage",
   "description": "Code tree for Gitlab",
-  "homepage_url": "https://linsage.xyz",
+  "homepage_url": "https://github.com/linsage/gitlab-treeview",
   "permissions": [
     "storage"
   ],
