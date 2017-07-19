@@ -8,7 +8,7 @@ var vm = {　　　　
     shortcuts_project: null,
     /* Detection if we are on GitLab page */
     isGitLab: function () {
-        var isGitLab = document.querySelector("meta[content='GitLab']");
+        var isGitLab = document.querySelector("meta[content^='GitLab']");
         if (!isGitLab) {
             return false;
         } else {
@@ -28,7 +28,7 @@ var vm = {　　　　
         vm.project_id = $('#project_id').val() || $('#search_project_id').val();
         vm.apiRepoTree = vm.apiRootUrl + '/api/v3/projects/' + vm.project_id + '/repository/tree';
         vm.repository_ref = $('#repository_ref').val();
-        console.info(vm)
+        //console.info(vm)
     },
     loadNode: function (parentNode) {
         //有子节点
@@ -53,7 +53,7 @@ var vm = {　　　　
             ref_name: vm.repository_ref,
             private_token: vm.private_token
         }, function (result) {
-            console.info(result);
+            //console.info(result);
 
             if (parentNode) {
                 parentNode.isAjaxing = false;
