@@ -10,7 +10,7 @@ Chrome extension to show a code tree on GitLab  :)
 
 ## Installation
 
-[Chrome](https://chrome.google.com/webstore)
+[Chrome](https://chrome.google.com/webstore/detail/gitlab-treeview/kfjchffabpogdehadpflljaikjicdpng)
 
 ## Screenshot
 
