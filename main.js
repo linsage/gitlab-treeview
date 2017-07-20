@@ -16,7 +16,7 @@ var vm = {　　　　
         }
     },
     isFilePage: function () {
-        return $(".file-holder").size() > 0 || $(".shortcuts-find-file").size() > 0;
+        return $(".shortcuts-find-file").size() > 0 || ($(".file-holder").size() > 0 && $(".sub-nav li.active a").text().trim() === 'Files');
     },
     initVariables: function () {
         var href = "" + $("head link[rel='alternate']").attr("href");
