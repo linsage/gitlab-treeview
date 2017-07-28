@@ -30,46 +30,46 @@ var vm = {　　　　
         vm.repository_ref = $('#repository_ref').val();
         //console.info(vm)
     },
-    loadNode: function (parentNode) {
-        //有子节点
-        if (parentNode && parentNode.children) {
-            return;
-        }
-
-        //加载中
-        if (parentNode && parentNode.isAjaxing) {
-            return;
-        }
-
-        if (parentNode) {
-            parentNode.isAjaxing = true;
-            vm.getZTree().updateNode(parentNode);
-        }
-
-
+    fetchFileTree: function (callback) {
         $.get(vm.apiRepoTree, {
             id: vm.project_id,
-            path: parentNode ? parentNode.path : null,
+            recursive: true,
             ref_name: vm.repository_ref,
             private_token: vm.private_token
         }, function (result) {
-            //console.info(result);
-
-            if (parentNode) {
-                parentNode.isAjaxing = false;
-                vm.getZTree().updateNode(parentNode);
-            }
+            var tree = {
+                // This array is used in order to meet the structure requirments by ztree.
+                'tree_arr': []
+            };
 
             if (result) {
+                // Convert the response data to another structure which can be accepted by ztree.
                 for (var i = 0; i < result.length; i++) {
                     var node = result[i];
                     if (node.type === 'tree') {
                         node.isParent = true;
+                        node.children = [];
+                        node.children_map = {};
                     }
-                    vm.getZTree().addNodes(parentNode, i, node);
+
+                    var path_fragments = node.path.split('/');
+                    if (path_fragments.length === 1) {      // root level
+                        tree[path_fragments[0]] = node;
+                        tree['tree_arr'].push(node);
+                    } else {                                // sub level
+                        var parent = tree[path_fragments[0]];
+                        for (var j = 1; j < path_fragments.length - 1; j++) {
+                            parent = parent.children_map[path_fragments[j]];
+                        }
+                        parent.children_map[path_fragments[path_fragments.length - 1]] = node;
+                        parent.children.push(node);
+                    }
                 }
             }
 
+            if (callback && typeof callback === "function") {
+                callback(tree['tree_arr']);
+            }
         });
     },
     showTree: function () {
@@ -111,14 +111,13 @@ var vm = {　　　　
             callback: {
                 onClick: function (event, treeId, treeNode) {
                     vm.selectNode(treeNode);
-                },
-                onExpand: function (event, treeId, treeNode) {
-                    vm.loadNode(treeNode);
                 }
             }
         };
 
-        $.fn.zTree.init($("#gitlabTreeView"), setting);
+        vm.fetchFileTree(function (tree) {
+            $.fn.zTree.init($("#gitlabTreeView"), setting, tree);
+        });
     },
     selectNode: function (treeNode) {
         if (treeNode.type === 'blob') {
@@ -211,7 +210,6 @@ var vm = {　　　　
             }
         });
         vm.initTree();
-        vm.loadNode(null);
     }
 };
 
