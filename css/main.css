@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   font-size: 14px;
-  font-family: "Microsoft YaHei" ! important;
+  font-family: "Microsoft YaHei", -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" ! important;
 }
 
 .ztree {
