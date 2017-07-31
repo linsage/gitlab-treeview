@@ -6,6 +6,7 @@ Chrome extension to show a code tree on GitLab  :)
 
 - Quick preview code
 - GitLab UI style
+- Search File
 - Support gitlab 9.x version
 
 ## Installation
@@ -14,7 +15,7 @@ Chrome extension to show a code tree on GitLab  :)
 
 ## Screenshot
 
-![](https://ws2.sinaimg.cn/large/006tNc79gy1fhpc4wcad7g30z10hzaqs.gif)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fi3ighoji0g30zk0m8du9.gif)
 
 
 ## Change Log
