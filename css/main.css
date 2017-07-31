@@ -294,7 +294,6 @@
 
 .ztree li span.button.ico_close {
   margin-right: 2px;
-  margin-right: 2px;
   background-image: none;
   vertical-align: top;
   *vertical-align: middle
@@ -358,9 +357,21 @@
   background-position: -168px 0;
 }
 
+.ztree li span.button.ico_loading:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f110";
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
 .ztree li span.button.ico_loading {
   margin-right: 2px;
-  background: url(data:image/gif;base64,R0lGODlhEAAQAKIGAMLY8YSx5HOm4Mjc88/g9Ofw+v///wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgAGACwAAAAAEAAQAAADMGi6RbUwGjKIXCAA016PgRBElAVlG/RdLOO0X9nK61W39qvqiwz5Ls/rRqrggsdkAgAh+QQFCgAGACwCAAAABwAFAAADD2hqELAmiFBIYY4MAutdCQAh+QQFCgAGACwGAAAABwAFAAADD1hU1kaDOKMYCGAGEeYFCQAh+QQFCgAGACwKAAIABQAHAAADEFhUZjSkKdZqBQG0IELDQAIAIfkEBQoABgAsCgAGAAUABwAAAxBoVlRKgyjmlAIBqCDCzUoCACH5BAUKAAYALAYACgAHAAUAAAMPaGpFtYYMAgJgLogA610JACH5BAUKAAYALAIACgAHAAUAAAMPCAHWFiI4o1ghZZJB5i0JACH5BAUKAAYALAAABgAFAAcAAAMQCAFmIaEp1motpDQySMNFAgA7) no-repeat scroll 0 0 transparent;
+  background-image: none;
   vertical-align: top;
   *vertical-align: middle
 }
@@ -451,7 +462,7 @@ a.gitlabTreeView_toggle {
   font-size: 13px;
   font-weight: normal;
   text-shadow: none;
-  height: 58px;
+  height: auto;
   line-height: 2.8;
   background: none rgb(250, 251, 252);
   border-bottom: 1px solid rgb(225, 228, 232);
@@ -485,4 +496,68 @@ a.gitlabTreeView_toggle {
   display: inline-block;
   min-width: 100%;
   padding-top: 2px;
+}
+
+.gitlabTreeView_cog_icon {
+  float: right;
+  position: relative;
+  top: 6px;
+  right: 6px;
+  cursor: pointer;
+}
+
+.gitlabTreeView_header_search {
+  margin-top: 2px;
+  margin-left: 4px;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 30px;
+}
+
+.gitlabTreeView_search_text {
+  border: 1px solid #e5e5e5;
+  font-size: 13px;
+  padding: 4px 16px 4px 6px;
+  line-height: 20px;
+  width: 60%;
+}
+
+.gitlabTreeView_search_icon {
+  position: relative;
+  right: 18px;
+  top: 0;
+  color: #e7e9ed;
+}
+
+.gitlabTreeView_search_icon.active {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.gitlabTreeView_header_setting {
+  margin-top: 4px;
+  margin-left: 4px;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: auto;
+  display: none;
+}
+
+.gitlabTreeView_header_setting * {
+  font-weight: normal;
+}
+
+.gitlabTreeView_header_setting_save {
+  cursor: pointer;
+  line-height: 1.5;
+  padding: 4px 6px;
+  font-size: 13px;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  color: rgba(0, 0, 0, 0.85);
 }

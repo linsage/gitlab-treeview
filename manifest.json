@@ -1,6 +1,6 @@
 {
   "name": "Gitlab TreeView",
-  "version": "1.1",
+  "version": "1.2",
   "manifest_version": 2,
   "author": "linsage",
   "description": "Code tree for Gitlab",
@@ -36,6 +36,7 @@
     "js": [
       "js/jquery-1.12.4.min.js",
       "js/jquery.ztree.all.min.js",
+      "js/jquery.ztree.exhide.min.js",
       "main.js"
     ],
     "run_at": "document_start"
