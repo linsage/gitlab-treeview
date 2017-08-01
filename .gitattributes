@@ -1,0 +1,6 @@
+*.css linguist-language=javascript
+*.js linguist-language=javascript
+*.yml linguist-language=javascript
+*.ejs linguist-language=javascript
+*.json linguist-language=javascript
+*.html linguist-language=javascript
