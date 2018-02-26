@@ -19,6 +19,8 @@ Chrome extension to show a code tree on GitLab  :)
 
 
 ## Change Log
+ - v1.3
+    - fix bug On gitlab 10.x, rss_token instead of private_token.
  - v1.2
     - add css loading
     - add options setting 
