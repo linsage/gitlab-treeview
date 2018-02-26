@@ -1,6 +1,8 @@
 var vm = {　　　　
     /* api variables */
     private_token: null,
+    rss_token: null,
+    rss_mode: false,
     apiRootUrl: null,
     apiRepoTree: null,
     project_id: null,
@@ -27,7 +29,13 @@ var vm = {　　　　
         var href = "" + $("head link[rel='alternate']").attr("href");
         var index = href.indexOf("=");
         if (index > -1) {
+            if (href.indexOf("rss_token") > -1) {
+                vm.rss_mode = true;
+            } else {
+                vm.rss_mode = false;
+            }
             vm.private_token = href.substring(index + 1);
+            vm.rss_token = href.substring(index + 1);
         }
         vm.apiRootUrl = window.location.origin;
         vm.project_id = $('#project_id').val() || $('#search_project_id').val();
@@ -50,12 +58,19 @@ var vm = {　　　　
             });
         }
 
-        $.get(vm.apiRepoTree, {
+        var param = {
             id: vm.project_id,
             path: parentNode ? parentNode.path : null,
-            ref_name: vm.repository_ref,
-            private_token: vm.private_token
-        }, function (result) {
+            ref_name: vm.repository_ref
+        };
+
+        if (vm.rss_mode) {
+            param.rss_token = vm.rss_token;
+        } else {
+            param.private_token = vm.private_token;
+        }
+
+        $.get(vm.apiRepoTree, param, function (result) {
             if (parentNode) {
                 parentNode.isAjaxing = false;
                 parentNode.zAsync = true;
@@ -77,12 +92,19 @@ var vm = {　　　　
         });
     },
     loadRecursiveNode: function () {
-        $.get(vm.apiRepoTree, {
+        var param = {
             id: vm.project_id,
             recursive: true,
-            ref_name: vm.repository_ref,
-            private_token: vm.private_token
-        }, function (result) {
+            ref_name: vm.repository_ref
+        };
+
+        if (vm.rss_mode) {
+            param.rss_token = vm.rss_token;
+        } else {
+            param.private_token = vm.private_token;
+        }
+
+        $.get(vm.apiRepoTree, param, function (result) {
             var treeArr = [];
 
             if (result) {
