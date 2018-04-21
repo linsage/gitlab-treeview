@@ -1,4 +1,4 @@
-var vm = {　　　　
+var vm = {
     /* api variables */
     private_token: null,
     rss_token: null,
@@ -11,7 +11,8 @@ var vm = {　　　　
     /* default setting */
     setting: {
         toggle: true,
-        recursive: true
+        recursive: true,
+        containerWidth: "230px"
     },
     /* Detection if we are on GitLab page */
     isGitLab: function () {
@@ -139,23 +140,41 @@ var vm = {　　　　
         vm.setting.toggle = true;
         vm.saveSetting();
 
-        $("html").css("margin-left", "230px");
-        $(".gitlabTreeView_sidebar").animate({
-            "width": "230px"
-        }, 'fast', "linear", function () {
-            $(".gitlabTreeView_toggle i").removeClass().addClass("fa fa-arrow-left");
-        });
+        $("html").css("margin-left", vm.setting.containerWidth);
+        vm.handleHeaderAndSideBar();
+        if (vm.isResizing()) {
+            $(".gitlabTreeView_sidebar").css("width", vm.setting.containerWidth);
+        } else {
+            $(".gitlabTreeView_sidebar").animate({
+                "width": vm.setting.containerWidth
+            }, 'fast', "linear", function () {
+                $(".gitlabTreeView_toggle i").removeClass().addClass("fa fa-arrow-left");
+            });
+        }
     },
     hideTree: function () {
         vm.setting.toggle = false;
         vm.saveSetting();
 
         $("html").css("margin-left", "0px");
+        vm.handleHeaderAndSideBar();
         $(".gitlabTreeView_sidebar").animate({
             "width": "0px"
         }, 'fast', "linear", function () {
             $(".gitlabTreeView_toggle i").removeClass().addClass("fa fa-arrow-right");
         });
+    },
+    // 处理打开或关闭的时候header和sidebar的状态 - gitlab10
+    handleHeaderAndSideBar: function () {
+        var left = vm.setting.toggle ? vm.setting.containerWidth : "0px";
+        var header = $("header.navbar-gitlab");
+        var sidebar = $(".nav-sidebar");
+        if (header.length > 0 && header.css("position") === "fixed") {
+            header.css("left", left);
+        }
+        if (sidebar.length > 0 && sidebar.css("position") === "fixed") {
+            sidebar.css("left", left);
+        }
     },
     initTree: function () {
         var setting = {
@@ -306,6 +325,10 @@ var vm = {　　　　
         //显示搜索结果叶子节点
         zTree.showNodes(nodeList);
     },
+    // 容器是否处于调整大小状态
+    isResizing: function() {
+        return !!$(".gitlabTreeView_resizable").data("resize");
+    },
     init: function () {
         if (!vm.isGitLab() || !vm.isFilePage()) {
             return;
@@ -320,6 +343,7 @@ var vm = {　　　　
         var nav = "<nav class='gitlabTreeView_sidebar'>";
         nav += "<a class='gitlabTreeView_toggle'><i class='fa fa-arrow-left'></i></a>";
         nav += "<div class='gitlabTreeView_content'>";
+        nav += "<div class='gitlabTreeView_resizable'></div>'";
         nav += "<div class='gitlabTreeView_header'>";
         nav += "<div class='gitlabTreeView_header_repo'><i class='fa fa-gitlab gitlabTreeView_tab'></i>" + shortcuts + "</div>";
         nav += "<div class='gitlabTreeView_header_branch'><i class='fa fa-share-alt gitlabTreeView_tab'></i>" + vm.repository_ref + "</div>";
@@ -354,6 +378,27 @@ var vm = {　　　　
                 vm.showTree();
             }
         });
+
+        /** resize */
+        // 调整容器宽度，最小宽度100px
+        $(".gitlabTreeView_resizable").on("mousedown", function(){
+            $(this).data("resize", true);
+        }).on("mouseup", function(){
+            $(this).data("resize", false);
+        });
+        $(document).on("mousemove", function(event){
+            if (vm.isResizing()) {
+                var width = event.clientX < 100 ? 100 : event.clientX;
+                vm.setting.containerWidth = width + "px";
+                vm.showTree();
+                event.preventDefault();
+            }
+        }).on("mouseup", function(){
+            if (vm.isResizing()) {
+                $(".gitlabTreeView_resizable").data("resize", false);
+            }
+        });
+
         /** search */
         $(".gitlabTreeView_search_text").on("keyup", function (event) {
             var searchValue = $(".gitlabTreeView_search_text").val();

@@ -561,3 +561,13 @@ a.gitlabTreeView_toggle {
   border: 1px solid #e5e5e5;
   color: rgba(0, 0, 0, 0.85);
 }
+
+.gitlabTreeView_resizable {
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  cursor: col-resize;
+  z-index: 9999;
+}
