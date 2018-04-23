@@ -140,6 +140,9 @@ var vm = {
     },
     openCurrentPathAndReturnNodeId: function(nodes) {
         var path = $("#path").val();
+        if (path.length === 0) {
+            return path;
+        }
         var names = path.split("/");
         var node;
         for (var k in names) {
