@@ -1,6 +1,6 @@
 {
   "name": "Gitlab TreeView",
-  "version": "1.4",
+  "version": "1.5",
   "manifest_version": 2,
   "author": "linsage",
   "description": "Code tree for Gitlab",

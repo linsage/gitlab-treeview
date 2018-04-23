@@ -359,7 +359,7 @@ var vm = {
         var nav = "<nav class='gitlabTreeView_sidebar'>";
         nav += "<a class='gitlabTreeView_toggle'><i class='fa fa-arrow-left'></i></a>";
         nav += "<div class='gitlabTreeView_content'>";
-        nav += "<div class='gitlabTreeView_resizable'></div>'";
+        nav += "<div class='gitlabTreeView_resizable'></div>";
         nav += "<div class='gitlabTreeView_header'>";
         nav += "<div class='gitlabTreeView_header_repo'><i class='fa fa-gitlab gitlabTreeView_tab'></i>" + shortcuts + "</div>";
         nav += "<div class='gitlabTreeView_header_branch'><i class='fa fa-share-alt gitlabTreeView_tab'></i>" + vm.repository_ref + "</div>";
