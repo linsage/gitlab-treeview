@@ -132,9 +132,25 @@ var vm = {
                     }
                 }
             }
-
-            vm.getZTree().addNodes(null, i, treeArr);
+            var selectNodeId = vm.openCurrentPathAndReturnNodeId(treeArr);
+            var ztree = vm.getZTree();
+            ztree.addNodes(null, i, treeArr);
+            ztree.selectNode(ztree.getNodeByParam("id", selectNodeId));
         });
+    },
+    openCurrentPathAndReturnNodeId: function(nodes) {
+        var path = $("#path").val();
+        if (path.length === 0) {
+            return path;
+        }
+        var names = path.split("/");
+        var node;
+        for (var k in names) {
+            var name = names[k];
+            node = node === undefined ? nodes[name] : node.children_map[name];
+            node.open = true;
+        }
+        return node.id;
     },
     showTree: function () {
         vm.setting.toggle = true;
