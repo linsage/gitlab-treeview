@@ -40,7 +40,7 @@ var vm = {
         }
         vm.apiRootUrl = window.location.origin;
         vm.project_id = $('#project_id').val() || $('#search_project_id').val();
-        vm.apiRepoTree = vm.apiRootUrl + '/api/v3/projects/' + vm.project_id + '/repository/tree';
+        vm.apiRepoTree = vm.apiRootUrl + '/api/v4/projects/' + vm.project_id + '/repository/tree';
         vm.repository_ref = $('#repository_ref').val();
         //console.info(vm)
     },
@@ -62,7 +62,7 @@ var vm = {
         var param = {
             id: vm.project_id,
             path: parentNode ? parentNode.path : null,
-            ref_name: vm.repository_ref
+            ref: vm.repository_ref
         };
 
         if (vm.rss_mode) {
