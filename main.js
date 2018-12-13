@@ -44,7 +44,31 @@ var vm = {
         vm.repository_ref = $('#repository_ref').val();
         //console.info(vm)
     },
-    loadNode: function (parentNode) {
+    loadRecursiveTree: function() {
+        const path = $('#path').val().split('/')
+        const ztree = vm.getZTree()
+        const self = this
+        function exec(treeArr) {
+            const p = path.shift()
+            const node = treeArr.filter(function(each) {
+                return each.name === p
+            })[0]
+            if(!node) {
+                return
+            }
+            const ztreeNode = ztree.getNodeByParam("id", node.id)
+            if(path.length) {
+                self.loadNode(ztreeNode, function(treeArr) {
+                    ztree.expandNode(ztreeNode, true)
+                    exec(treeArr)
+                })
+            } else {
+                ztree.selectNode(ztreeNode);
+            }
+        }
+        this.loadNode(null, exec)
+    },
+    loadNode: function (parentNode, cb) {
         if (parentNode && (parentNode.zAsync || parentNode.isAjaxing)) {
             return;
         }
@@ -65,11 +89,11 @@ var vm = {
             ref: vm.repository_ref
         };
 
-        if (vm.rss_mode) {
-            param.rss_token = vm.rss_token;
-        } else {
-            param.private_token = vm.private_token;
-        }
+        // if (vm.rss_mode) {
+        //     param.rss_token = vm.rss_token;
+        // } else {
+        //     param.private_token = vm.private_token;
+        // }
 
         $.get(vm.apiRepoTree, param, function (result) {
             if (parentNode) {
@@ -90,6 +114,7 @@ var vm = {
                 }
             }
             vm.getZTree().addNodes(parentNode, i, treeArr);
+            cb && cb(treeArr)
         });
     },
     loadRecursiveNode: function () {
@@ -99,11 +124,11 @@ var vm = {
             ref_name: vm.repository_ref
         };
 
-        if (vm.rss_mode) {
-            param.rss_token = vm.rss_token;
-        } else {
-            param.private_token = vm.private_token;
-        }
+        // if (vm.rss_mode) {
+        //     param.rss_token = vm.rss_token;
+        // } else {
+        //     param.private_token = vm.private_token;
+        // }
 
         $.get(vm.apiRepoTree, param, function (result) {
             var treeArr = [];
@@ -224,8 +249,9 @@ var vm = {
         $.fn.zTree.init($("#gitlabTreeView"), setting);
     },
     selectNode: function (treeNode) {
+        var href
         if (treeNode.type === 'blob') {
-            var href = window.location.origin + '/' + vm.shortcuts_project + '/blob/' + vm.repository_ref + '/' + treeNode.path;
+            href = window.location.origin + '/' + vm.shortcuts_project + '/blob/' + vm.repository_ref + '/' + treeNode.path;
 
             //加载文件信息
             $.ajax({
@@ -254,7 +280,7 @@ var vm = {
                 }
             })
         } else if (treeNode.type === 'tree') {
-            var href = window.location.origin + '/' + vm.shortcuts_project + '/tree/' + vm.repository_ref + '/' + treeNode.path;
+            href = window.location.origin + '/' + vm.shortcuts_project + '/tree/' + vm.repository_ref + '/' + treeNode.path;
             $.ajax({
                 type: "GET",
                 url: href,
@@ -270,6 +296,8 @@ var vm = {
                 }
             })
         }
+        document.title = treeNode.path
+        window.history.pushState(null, null, href)
     },
     //得到树对象
     getZTree: function () {
@@ -462,7 +490,7 @@ var vm = {
         vm.initTree();
 
         if (vm.setting.recursive) {
-            vm.loadRecursiveNode();
+            vm.loadRecursiveTree();
         } else {
             vm.loadNode(null);
         }
