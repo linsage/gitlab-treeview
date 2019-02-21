@@ -86,7 +86,8 @@ var vm = {
         var param = {
             id: vm.project_id,
             path: parentNode ? parentNode.path : null,
-            ref: vm.repository_ref
+            ref: vm.repository_ref,
+            per_page: 9999
         };
 
         // if (vm.rss_mode) {
