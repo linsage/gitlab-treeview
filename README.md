@@ -1,5 +1,7 @@
 # GitLab-TreeView
 
+> fork from [gitlab-treeview](https://github.com/linsage/gitlab-treeview) and fix some bug
+
 Chrome extension to show a code tree on GitLab :)
 
 ## Features
@@ -11,7 +13,8 @@ Chrome extension to show a code tree on GitLab :)
 
 ## Installation
 
-[Chrome](https://chrome.google.com/webstore/detail/gitlab-treeview/kfjchffabpogdehadpflljaikjicdpng)
+<!-- [Chrome](https://chrome.google.com/webstore/detail/gitlab-treeview/kfjchffabpogdehadpflljaikjicdpng) -->
+[release](https://github.com/zWingz/gitlab-treeview/releases)
 
 ## Screenshot
 
@@ -39,8 +42,3 @@ Chrome extension to show a code tree on GitLab :)
   - basic function
 - v1.0
   - initial version
-
-## More
-
-- Email：[linsage@live.com](mailto:linsage@live.com)
-- Blog：[https://linsage.com](https://linsage.com)
