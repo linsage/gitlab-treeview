@@ -15,7 +15,7 @@ Chrome extension to show a code tree on GitLab  :)
 
 ## Screenshot
 
-![](https://ws2.sinaimg.cn/large/006tNc79gy1fi3ighoji0g30zk0m8du9.gif)
+![](https://raw.githubusercontent.com/linsage/gitlab-treeview/master/screenshot/gitlab-treeview.gif)
 
 
 ## Change Log
@@ -43,5 +43,10 @@ Chrome extension to show a code tree on GitLab  :)
 - Email：[linsage@live.com](mailto:linsage@live.com)
 - Blog：[https://linsage.com](https://linsage.com)
 
+## Support
+
+[Donate with PayPal](https://www.paypal.me/linsage)
+![](https://note-1256162930.picgz.myqcloud.com/zo1mm.jpg)
+
 ## License
-The [MIT](LICENSE)
+[MIT](LICENSE)
