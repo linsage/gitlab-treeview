@@ -42,3 +42,6 @@ Chrome extension to show a code tree on GitLab  :)
 
 - Email：[linsage@live.com](mailto:linsage@live.com)
 - Blog：[https://linsage.com](https://linsage.com)
+
+## License
+The [MIT](LICENSE)
