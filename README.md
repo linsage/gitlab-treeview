@@ -19,6 +19,8 @@ Chrome extension to show a code tree on GitLab  :)
 
 
 ## Change Log
+ - v1.7
+    - support private_token
  - v1.6
     - api V3 to api V4
  - v1.5

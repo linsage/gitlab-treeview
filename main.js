@@ -10,6 +10,7 @@ var vm = {
     shortcuts_project: null,
     /* default setting */
     setting: {
+        private_token: "",
         toggle: true,
         recursive: true,
         containerWidth: "230px"
@@ -35,7 +36,11 @@ var vm = {
             } else {
                 vm.rss_mode = false;
             }
-            vm.private_token = href.substring(index + 1);
+            if(vm.setting.private_token && vm.setting.private_token.length>0){
+                vm.private_token= vm.setting.private_token
+            }else{
+                vm.private_token = href.substring(index + 1);
+            }
             vm.rss_token = href.substring(index + 1);
         }
         vm.apiRootUrl = window.location.origin;
@@ -138,7 +143,7 @@ var vm = {
             ztree.selectNode(ztree.getNodeByParam("id", selectNodeId));
         });
     },
-    openCurrentPathAndReturnNodeId: function(nodes) {
+    openCurrentPathAndReturnNodeId: function (nodes) {
         var path = $("#path").val();
         if (path.length === 0) {
             return path;
@@ -266,7 +271,8 @@ var vm = {
                         $(".content-wrapper").html(content);
                     } catch (err) {
                         //console.info(err);
-                    } finally {}
+                    } finally {
+                    }
                 }
             })
         }
@@ -342,14 +348,15 @@ var vm = {
         zTree.showNodes(nodeList);
     },
     // 容器是否处于调整大小状态
-    isResizing: function() {
+    isResizing: function () {
         return !!$(".gitlabTreeView_resizable").data("resize");
     },
     init: function () {
         if (!vm.isGitLab() || !vm.isFilePage()) {
             return;
         }
-
+        //setting
+        vm.setting = vm.getSetting() != null ? vm.getSetting() : vm.setting;
         vm.initVariables();
 
         vm.shortcuts_project = "" + $(".shortcuts-project").attr("href");
@@ -368,6 +375,7 @@ var vm = {
 
         nav += "<div class='gitlabTreeView_header_setting'>"
         nav += "<div><label><input type='checkbox' name='recursive' checked> Load entire tree at once</label></div>";
+        nav += "<div><input type='text' class='gitlabTreeView_token_text' name='private_token' placeholder='private_token'/></div>";
         nav += "<div><button class='gitlabTreeView_header_setting_save'>Save</button></div>";
         nav += "</div>";
 
@@ -376,10 +384,6 @@ var vm = {
         nav += "</div>";
         nav += "</div>";
         $("body").append($(nav));
-
-        //setting
-        vm.setting = vm.getSetting() != null ? vm.getSetting() : vm.setting;
-
 
         if (vm.setting.toggle) {
             vm.showTree();
@@ -397,19 +401,19 @@ var vm = {
 
         /** resize */
         // 调整容器宽度，最小宽度100px
-        $(".gitlabTreeView_resizable").on("mousedown", function(){
+        $(".gitlabTreeView_resizable").on("mousedown", function () {
             $(this).data("resize", true);
-        }).on("mouseup", function(){
+        }).on("mouseup", function () {
             $(this).data("resize", false);
         });
-        $(document).on("mousemove", function(event){
+        $(document).on("mousemove", function (event) {
             if (vm.isResizing()) {
                 var width = event.clientX < 100 ? 100 : event.clientX;
                 vm.setting.containerWidth = width + "px";
                 vm.showTree();
                 event.preventDefault();
             }
-        }).on("mouseup", function(){
+        }).on("mouseup", function () {
             if (vm.isResizing()) {
                 $(".gitlabTreeView_resizable").data("resize", false);
             }
@@ -444,19 +448,22 @@ var vm = {
 
         /** saveSetting */
         $(".gitlabTreeView_header_setting_save").on("click", function () {
-            $(".gitlabTreeView_header_setting input[type=checkbox]").each(function () {
+            $(".gitlabTreeView_header_setting input").each(function () {
                 var name = $(this).attr('name');
-                vm.setting[name] = $(this).is(':checked');
-                vm.saveSetting();
+                vm.setting[name] = $(this).is(':checkbox') ? $(this).is(':checked') : $(this).val()
             });
-
+            vm.saveSetting();
             $(".gitlabTreeView_header_setting").slideUp();
         })
 
-        $(".gitlabTreeView_header_setting input[type=checkbox]").each(function () {
+        $(".gitlabTreeView_header_setting input").each(function () {
             var name = $(this).attr('name');
             var value = vm.setting[name];
-            $(this).prop('checked', value);
+            if ($(this).is(':checkbox')) {
+                $(this).prop('checked', value);
+            } else {
+                $(this).val(value);
+            }
         });
 
         vm.initTree();

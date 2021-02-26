@@ -571,3 +571,14 @@ a.gitlabTreeView_toggle {
   cursor: col-resize;
   z-index: 9999;
 }
+
+.gitlabTreeView_token_text{
+  font-size: 13px;
+  line-height: 20px;
+  width: 60%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 229, 229);
+  border-image: initial;
+  padding: 4px 16px 4px 6px;
+}
