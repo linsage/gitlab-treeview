@@ -101,7 +101,7 @@ var vm = {
         var param = {
             id: vm.project_id,
             recursive: true,
-            ref_name: vm.repository_ref
+            ref: vm.repository_ref
         };
 
         if (vm.rss_mode) {
