@@ -1,12 +1,11 @@
 {
   "name": "Gitlab TreeView",
-  "version": "1.7",
+  "version": "1.8",
   "manifest_version": 2,
   "author": "linsage",
   "description": "Code tree for Gitlab",
   "homepage_url": "https://github.com/linsage/gitlab-treeview",
   "permissions": [
-    "storage"
   ],
   "icons": {
     "16": "images/gitlab.png",
